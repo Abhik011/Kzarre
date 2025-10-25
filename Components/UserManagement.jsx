@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MoreVertical, Plus } from 'lucide-react';
+import { MoreVertical, Plus, X } from 'lucide-react';
 
 const usersData = [
   { id: 1, name: 'Abhijeet kulkarni', email: 'abhijeetkulkarni.work@outlook.com', status: 'Active', lastLogin: 'Jan 10, 2024', role: 'PM' },
@@ -30,6 +30,8 @@ const rolesData = [
 ];
 
 const permissions = ['Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1'];
+
+const rolesList = ['Admin', 'Editor', 'Support', 'Customer', 'PM', 'CE', 'AR', 'ACSR', 'AMS'];
 
 const UserList = () => (
   <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
@@ -144,10 +146,10 @@ const ActivityLog = () => (
         <tbody>
           {activityData.map((activity) => (
             <tr key={activity.id} className="border-b border-gray-200 hover:bg-gray-50">
-              <td className="px-4 py-4 text-xs sm:text-sm text-gray-600">{activity.timestamp}</td>
-              <td className="px-4 py-4 text-sm font-medium text-gray-900">{activity.user}</td>
-              <td className="px-4 py-4 text-sm text-gray-600">{activity.action}</td>
-              <td className="px-4 py-4 text-sm text-gray-600 hidden md:table-cell truncate">{activity.details}</td>
+              <td className="px-4 py-4 text-sm text-gray-600">{activity.timestamp}</td>
+              <td className="px-4 py-4 text-sm text-gray-900 font-medium">{activity.user}</td>
+              <td className="px-4 py-4 text-sm text-gray-900">{activity.action}</td>
+              <td className="px-4 py-4 text-sm text-gray-600 hidden md:table-cell">{activity.details}</td>
               <td className="px-4 py-4 text-sm text-gray-600 hidden lg:table-cell">{activity.ip}</td>
             </tr>
           ))}
@@ -159,12 +161,12 @@ const ActivityLog = () => (
 
 const RolesPermissions = ({ onAddRoleClick }) => (
   <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
       <div>
-        <h3 className="text-lg font-bold text-gray-900">Roles & Permissions</h3>
-        <p className="text-sm text-gray-600">Showing all users</p>
+        <h3 className="text-lg font-bold text-gray-900 mb-2">Roles & Permissions</h3>
+        <p className="text-sm text-gray-600">Manage user roles</p>
       </div>
-      <button onClick={onAddRoleClick} className="w-full sm:w-auto px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 flex items-center justify-center gap-2 text-sm font-medium">
+      <button onClick={onAddRoleClick} className="w-full sm:w-auto px-4 py-2 bg-[#A0EDA8] text-black rounded-lg hover:bg-[#A0EDA8] hover:scale-105 hover:bg-green-500 flex items-center justify-center gap-2 font-medium text-sm">
         <Plus size={18} />Add Role
       </button>
     </div>
@@ -211,6 +213,168 @@ const RolesPermissions = ({ onAddRoleClick }) => (
   </div>
 );
 
+const AddUserModal = ({ isOpen, onClose }) => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    role: '',
+    status: 'Active',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('New user data:', formData);
+    // Here you would typically send this data to your backend
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      role: '',
+      status: 'Active',
+    });
+    onClose();
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="p-6 sm:p-8">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Add User</h2>
+              <p className="text-gray-600 text-sm mt-1">Create a new user account</p>
+            </div>
+            <button
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  First Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
+                  placeholder="Enter first name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Last Name <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
+                  placeholder="Enter last name"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-900 mb-2">
+                Email Address <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
+                placeholder="Enter email address"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Role <span className="text-red-500">*</span>
+                </label>
+                <select
+                  name="role"
+                  value={formData.role}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
+                >
+                  <option value="">Select a role</option>
+                  {rolesList.map((role) => (
+                    <option key={role} value={role}>
+                      {role}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Status
+                </label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                  <option value="Pending">Pending</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm text-blue-900">
+                <span className="font-semibold">Note:</span> A temporary password will be sent to the user's email address.
+              </p>
+            </div>
+
+            <div className="flex gap-4 justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm font-medium"
+              >
+                Create User
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AddRoleModal = ({ isOpen, onClose }) => {
   const [roleName, setRoleName] = useState('');
   const [roleDescription, setRoleDescription] = useState('');
@@ -226,8 +390,8 @@ const AddRoleModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="p-6 sm:p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Add Roles</h2>
           <p className="text-gray-600 text-sm mb-6">Define describe the role's responsibilities</p>
@@ -269,6 +433,7 @@ const AddRoleModal = ({ isOpen, onClose }) => {
 
 export default function UserManagement() {
   const [activeTab, setActiveTab] = useState('userList');
+  const [isAddUserModalOpen, setIsAddUserModalOpen] = useState(false);
   const [isAddRoleModalOpen, setIsAddRoleModalOpen] = useState(false);
 
   return (
@@ -282,15 +447,15 @@ export default function UserManagement() {
       {/* Content Container */}
       <div>
         {/* Tab Navigation */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-          <div className="flex gap-4 sm:gap-8 border-b border-gray-200 w-full sm:w-auto overflow-x-auto">
-            <button onClick={() => setActiveTab('userList')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'userList' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-600 hover:text-gray-900'}`}>User List</button>
-            <button onClick={() => setActiveTab('rolesPermissions')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'rolesPermissions' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-600 hover:text-gray-900'}`}>Roles & Permissions</button>
-            <button onClick={() => setActiveTab('activityLog')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'activityLog' ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-600 hover:text-gray-900'}`}>Activity Log</button>
-          </div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-6 mb-6">
+              <div className="flex gap-4 sm:gap-8 border-b border-gray-200 w-full sm:w-auto overflow-x-auto">
+                <button onClick={() => setActiveTab('userList')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'userList' ? 'text-green-600 border-b-2 border-green-500' : 'text-gray-600 hover:text-gray-900'}`}>User List</button>
+                <button onClick={() => setActiveTab('rolesPermissions')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'rolesPermissions' ? 'text-green-600 border-b-2 border-green-500' : 'text-gray-600 hover:text-gray-900'}`}>Roles & Permissions</button>
+                <button onClick={() => setActiveTab('activityLog')} className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${activeTab === 'activityLog' ? 'text-green-600 border-b-2 border-green-500' : 'text-gray-600 hover:text-gray-900'}`}>Activity Log</button>
+              </div>
 
           {activeTab === 'userList' && (
-            <button className="w-full sm:w-auto px-4 py-2 bg-green-400 text-white rounded-lg hover:bg-green-500 flex items-center justify-center gap-2 font-medium text-sm">
+            <button onClick={() => setIsAddUserModalOpen(true)} className="w-full sm:w-auto px-4 py-2 bg-[#A0EDA8] text-black rounded-lg hover:bg-green-500 hover:scale-105 flex items-center justify-center gap-2 font-medium text-sm">
               <Plus size={18} />Add User
             </button>
           )}
@@ -300,6 +465,9 @@ export default function UserManagement() {
         {activeTab === 'userList' && <UserList />}
         {activeTab === 'rolesPermissions' && <RolesPermissions onAddRoleClick={() => setIsAddRoleModalOpen(true)} />}
         {activeTab === 'activityLog' && <ActivityLog />}
+
+        {/* Add User Modal */}
+        <AddUserModal isOpen={isAddUserModalOpen} onClose={() => setIsAddUserModalOpen(false)} />
 
         {/* Add Role Modal */}
         <AddRoleModal isOpen={isAddRoleModalOpen} onClose={() => setIsAddRoleModalOpen(false)} />

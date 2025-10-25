@@ -116,7 +116,7 @@ export default function Sidebar() {
               </div>
               {isOpen && (
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-sm truncate">Abhijeet Kulkarni</p>
+                  <p className="font-semibold text-sm text-gray-600 truncate">Abhijeet Kulkarni</p>
                   <p className="text-xs text-gray-600 truncate">abhijeet.work@kzarre.com</p>
                 </div>
               )}
