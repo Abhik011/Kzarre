@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { MoreVertical, Plus, Search } from 'lucide-react';
+import { MoreVertical, Plus } from 'lucide-react';
 
 const usersData = [
   {
@@ -11,7 +11,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'PM',
-    avatar: '👤',
   },
   {
     id: 2,
@@ -20,7 +19,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'Editor',
-    avatar: '👤',
   },
   {
     id: 3,
@@ -29,7 +27,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'Support',
-    avatar: '👤',
   },
   {
     id: 4,
@@ -38,7 +35,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'Admin',
-    avatar: '👤',
   },
   {
     id: 5,
@@ -47,7 +43,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'CE',
-    avatar: '👤',
   },
   {
     id: 6,
@@ -56,7 +51,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'AR',
-    avatar: '👤',
   },
   {
     id: 7,
@@ -65,7 +59,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'ACSR',
-    avatar: '👤',
   },
   {
     id: 8,
@@ -74,7 +67,6 @@ const usersData = [
     status: 'Active',
     lastLogin: 'Jan 10, 2024',
     role: 'AMS',
-    avatar: '👤',
   },
 ];
 
@@ -119,30 +111,6 @@ const activityData = [
     details: 'Old Title to New title page1',
     ip: '192.168.1.5',
   },
-  {
-    id: 6,
-    timestamp: '2025-01-18 10:30:15',
-    user: 'Abhijeet kulkarni',
-    action: 'Edited Title',
-    details: 'Old Title to New title page1',
-    ip: '192.168.1.5',
-  },
-  {
-    id: 7,
-    timestamp: '2025-01-18 10:30:15',
-    user: 'Abhijeet kulkarni',
-    action: 'Edited Title',
-    details: 'Old Title to New title page1',
-    ip: '192.168.1.5',
-  },
-  {
-    id: 8,
-    timestamp: '2025-01-18 10:30:15',
-    user: 'Abhijeet kulkarni',
-    action: 'Edited Title',
-    details: 'Old Title to New title page1',
-    ip: '192.168.1.5',
-  },
 ];
 
 const rolesData = [
@@ -172,82 +140,88 @@ const rolesData = [
   },
 ];
 
-const permissions = [
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-  'Permission1',
-];
-
-const UserActionMenu = () => (
-  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-    <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm">
-      Edit Profile
-    </button>
-    <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm border-t border-gray-200">
-      Change Status
-    </button>
-    <button className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-50 text-sm border-t border-gray-200">
-      Reset Password
-    </button>
-    <button className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 text-sm border-t border-gray-200">
-      Delete User
-    </button>
-  </div>
-);
+const permissions = ['Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1', 'Permission1'];
 
 const UserList = () => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm">
-    <h3 className="text-lg font-bold text-gray-900 mb-4">User List</h3>
-    <p className="text-sm text-gray-600 mb-6">Showing all users</p>
+  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+    <h3 className="text-lg font-bold text-gray-900 mb-2">User List</h3>
+    <p className="text-sm text-gray-600 mb-4 sm:mb-6">Showing all users</p>
     
-    <div className="overflow-x-auto">
-      <table className="w-full">
+    {/* Mobile Card View */}
+    <div className="sm:hidden space-y-4">
+      {usersData.map((user) => (
+        <div key={user.id} className="border border-gray-200 rounded-lg p-4">
+          <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-10 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
+                {user.name.charAt(0)}
+              </div>
+              <div className="min-w-0">
+                <p className="font-medium text-gray-900 text-sm truncate">{user.name}</p>
+                <p className="text-xs text-gray-600 truncate">{user.email}</p>
+              </div>
+            </div>
+            <button className="text-gray-500 hover:text-gray-700 flex-shrink-0">
+              <MoreVertical size={18} />
+            </button>
+          </div>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between">
+              <span className="text-gray-600">Status:</span>
+              <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                <span className="w-1.5 h-1.5 bg-green-600 rounded-full inline-block mr-1"></span>
+                {user.status}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Last Login:</span>
+              <span className="font-medium">{user.lastLogin}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-gray-600">Role:</span>
+              <span className="font-medium">{user.role}</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Table View - Hidden on Mobile */}
+    <div className="hidden sm:block overflow-x-auto">
+      <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">User</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Email</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Status</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Last Login</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Role</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">User</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900 hidden md:table-cell">Email</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Status</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900 hidden lg:table-cell">Last Login</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900 hidden xl:table-cell">Role</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Actions</th>
           </tr>
         </thead>
         <tbody>
           {usersData.map((user) => (
             <tr key={user.id} className="border-b border-gray-200 hover:bg-gray-50">
-              <td className="px-6 py-4">
+              <td className="px-4 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-300 to-orange-500 rounded-full flex items-center justify-center text-white font-semibold flex-shrink-0">
                     {user.name.charAt(0)}
                   </div>
                   <span className="text-sm font-medium text-gray-900">{user.name}</span>
                 </div>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">{user.email}</td>
-              <td className="px-6 py-4">
-                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold flex items-center w-fit gap-2">
+              <td className="px-4 py-4 text-sm text-gray-600 hidden md:table-cell truncate">{user.email}</td>
+              <td className="px-4 py-4">
+                <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold inline-flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-600 rounded-full"></span>
                   {user.status}
                 </span>
               </td>
-              <td className="px-6 py-4 text-sm text-gray-600">{user.lastLogin}</td>
-              <td className="px-6 py-4 text-sm font-medium text-gray-900">{user.role}</td>
-              <td className="px-6 py-4 relative">
+              <td className="px-4 py-4 text-sm text-gray-600 hidden lg:table-cell">{user.lastLogin}</td>
+              <td className="px-4 py-4 text-sm font-medium text-gray-900 hidden xl:table-cell">{user.role}</td>
+              <td className="px-4 py-4">
                 <button className="text-gray-500 hover:text-gray-700">
-                  <MoreVertical size={20} />
+                  <MoreVertical size={18} />
                 </button>
               </td>
             </tr>
@@ -259,29 +233,45 @@ const UserList = () => (
 );
 
 const ActivityLog = () => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm">
-    <h3 className="text-lg font-bold text-gray-900 mb-4">Activity Log</h3>
-    <p className="text-sm text-gray-600 mb-6">Showing all users</p>
+  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+    <h3 className="text-lg font-bold text-gray-900 mb-2">Activity Log</h3>
+    <p className="text-sm text-gray-600 mb-4 sm:mb-6">Showing all users</p>
     
-    <div className="overflow-x-auto">
-      <table className="w-full">
+    {/* Mobile Card View */}
+    <div className="sm:hidden space-y-4">
+      {activityData.map((activity) => (
+        <div key={activity.id} className="border border-gray-200 rounded-lg p-4 text-sm">
+          <p className="font-semibold text-gray-900 mb-2">{activity.action}</p>
+          <div className="space-y-1 text-xs text-gray-600">
+            <div><span className="font-medium">Time:</span> {activity.timestamp}</div>
+            <div><span className="font-medium">User:</span> {activity.user}</div>
+            <div><span className="font-medium">Details:</span> {activity.details}</div>
+            <div><span className="font-medium">IP:</span> {activity.ip}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Table View - Hidden on Mobile */}
+    <div className="hidden sm:block overflow-x-auto">
+      <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">TimeStamp</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">User</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Action</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Details</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">IP address</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">TimeStamp</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">User</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Action</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900 hidden md:table-cell">Details</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900 hidden lg:table-cell">IP address</th>
           </tr>
         </thead>
         <tbody>
           {activityData.map((activity) => (
             <tr key={activity.id} className="border-b border-gray-200 hover:bg-gray-50">
-              <td className="px-6 py-4 text-sm text-gray-600">{activity.timestamp}</td>
-              <td className="px-6 py-4 text-sm font-medium text-gray-900">{activity.user}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{activity.action}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{activity.details}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{activity.ip}</td>
+              <td className="px-4 py-4 text-xs sm:text-sm text-gray-600">{activity.timestamp}</td>
+              <td className="px-4 py-4 text-sm font-medium text-gray-900">{activity.user}</td>
+              <td className="px-4 py-4 text-sm text-gray-600">{activity.action}</td>
+              <td className="px-4 py-4 text-sm text-gray-600 hidden md:table-cell truncate">{activity.details}</td>
+              <td className="px-4 py-4 text-sm text-gray-600 hidden lg:table-cell">{activity.ip}</td>
             </tr>
           ))}
         </tbody>
@@ -291,40 +281,57 @@ const ActivityLog = () => (
 );
 
 const RolesPermissions = ({ onAddRoleClick }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm">
-    <div className="flex items-center justify-between mb-6">
+  <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 sm:mb-6">
       <div>
         <h3 className="text-lg font-bold text-gray-900">Roles & Permissions</h3>
         <p className="text-sm text-gray-600">Showing all users</p>
       </div>
       <button
         onClick={onAddRoleClick}
-        className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 flex items-center gap-2 text-sm font-medium"
+        className="w-full sm:w-auto px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 flex items-center justify-center gap-2 text-sm font-medium"
       >
         <Plus size={18} />
         Add Role
       </button>
     </div>
 
-    <div className="overflow-x-auto">
-      <table className="w-full">
+    {/* Mobile Card View */}
+    <div className="sm:hidden space-y-4">
+      {rolesData.map((role) => (
+        <div key={role.id} className="border border-gray-200 rounded-lg p-4">
+          <div className="flex justify-between items-start mb-2">
+            <h4 className="font-semibold text-gray-900">{role.role}</h4>
+            <button className="text-gray-500 hover:text-gray-700">
+              <MoreVertical size={18} />
+            </button>
+          </div>
+          <p className="text-sm text-gray-600 mb-2">{role.description}</p>
+          <p className="text-sm font-medium text-gray-900">Assigned: <span className="text-green-600">{role.assigned}</span></p>
+        </div>
+      ))}
+    </div>
+
+    {/* Table View - Hidden on Mobile */}
+    <div className="hidden sm:block overflow-x-auto">
+      <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Role</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Description</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">User Assigned</th>
-            <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">Actions</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Role</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Description</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">User Assigned</th>
+            <th className="px-4 py-3 text-left font-semibold text-gray-900">Actions</th>
           </tr>
         </thead>
         <tbody>
           {rolesData.map((role) => (
             <tr key={role.id} className="border-b border-gray-200 hover:bg-gray-50">
-              <td className="px-6 py-4 text-sm font-medium text-gray-900">{role.role}</td>
-              <td className="px-6 py-4 text-sm text-gray-600">{role.description}</td>
-              <td className="px-6 py-4 text-sm font-medium text-gray-900">{role.assigned}</td>
-              <td className="px-6 py-4">
+              <td className="px-4 py-4 text-sm font-medium text-gray-900">{role.role}</td>
+              <td className="px-4 py-4 text-sm text-gray-600">{role.description}</td>
+              <td className="px-4 py-4 text-sm font-medium text-gray-900">{role.assigned}</td>
+              <td className="px-4 py-4">
                 <button className="text-gray-500 hover:text-gray-700">
-                  <MoreVertical size={20} />
+                  <MoreVertical size={18} />
                 </button>
               </td>
             </tr>
@@ -352,19 +359,19 @@ const AddRoleModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-8">
+        <div className="p-6 sm:p-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-2">Add Roles</h2>
           <p className="text-gray-600 text-sm mb-6">Define describe the role's responsibilities</p>
 
           <div className="space-y-6">
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-900 mb-2">Role Name</label>
                 <input
                   type="text"
                   value={roleName}
                   onChange={(e) => setRoleName(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
                   placeholder="Enter role name"
                 />
               </div>
@@ -374,7 +381,7 @@ const AddRoleModal = ({ isOpen, onClose }) => {
                   type="text"
                   value={roleDescription}
                   onChange={(e) => setRoleDescription(e.target.value)}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none text-sm"
                   placeholder="Enter role description"
                 />
               </div>
@@ -382,7 +389,7 @@ const AddRoleModal = ({ isOpen, onClose }) => {
 
             <div>
               <label className="block text-sm font-bold text-gray-900 mb-4">Permissions</label>
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                 {permissions.map((permission, index) => (
                   <label key={index} className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -391,7 +398,7 @@ const AddRoleModal = ({ isOpen, onClose }) => {
                       onChange={() => handlePermissionChange(permission + index)}
                       className="w-4 h-4 rounded border-gray-300 text-green-600 focus:ring-2 focus:ring-green-500"
                     />
-                    <span className="text-sm text-gray-600">{permission}</span>
+                    <span className="text-xs sm:text-sm text-gray-600">{permission}</span>
                   </label>
                 ))}
               </div>
@@ -401,11 +408,11 @@ const AddRoleModal = ({ isOpen, onClose }) => {
           <div className="flex gap-4 justify-end mt-8">
             <button
               onClick={onClose}
-              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+              className="px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 text-sm"
             >
               Cancel
             </button>
-            <button className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800">
+            <button className="px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 text-sm">
               Create Role
             </button>
           </div>
@@ -418,24 +425,23 @@ const AddRoleModal = ({ isOpen, onClose }) => {
 export default function UserManagement() {
   const [activeTab, setActiveTab] = useState('userList');
   const [isAddRoleModalOpen, setIsAddRoleModalOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState(null);
 
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="">
-        <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-        <p className="text-gray-600 mt-1">Manage and control system users</p>
+      <div className="px-4 sm:px-6 lg:px-8 pt-16 sm:pt-4 lg:pt-8 pb-4 sm:pb-6">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">User Management</h1>
+        <p className="text-sm sm:text-base text-gray-600 mt-1">Manage and control system users</p>
       </div>
 
       {/* Content Container */}
-      <div className="">
+      <div className="px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8">
         {/* Tab Navigation */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex gap-8 border-b border-gray-200">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+          <div className="flex gap-4 sm:gap-8 border-b border-gray-200 w-full sm:w-auto overflow-x-auto">
             <button
               onClick={() => setActiveTab('userList')}
-              className={`pb-3 px-1 font-medium text-sm transition-colors ${
+              className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${
                 activeTab === 'userList'
                   ? 'text-gray-900 border-b-2 border-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
@@ -445,7 +451,7 @@ export default function UserManagement() {
             </button>
             <button
               onClick={() => setActiveTab('rolesPermissions')}
-              className={`pb-3 px-1 font-medium text-sm transition-colors ${
+              className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${
                 activeTab === 'rolesPermissions'
                   ? 'text-gray-900 border-b-2 border-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
@@ -455,7 +461,7 @@ export default function UserManagement() {
             </button>
             <button
               onClick={() => setActiveTab('activityLog')}
-              className={`pb-3 px-1 font-medium text-sm transition-colors ${
+              className={`pb-3 px-1 font-medium text-sm transition-colors whitespace-nowrap ${
                 activeTab === 'activityLog'
                   ? 'text-gray-900 border-b-2 border-gray-900'
                   : 'text-gray-600 hover:text-gray-900'
@@ -466,7 +472,7 @@ export default function UserManagement() {
           </div>
 
           {activeTab === 'userList' && (
-            <button className="px-4 py-2 bg-green-400 text-white rounded-lg hover:bg-green-500 flex items-center gap-2 font-medium">
+            <button className="w-full sm:w-auto px-4 py-2 bg-green-400 text-white rounded-lg hover:bg-green-500 flex items-center justify-center gap-2 font-medium text-sm">
               <Plus size={18} />
               Add User
             </button>
