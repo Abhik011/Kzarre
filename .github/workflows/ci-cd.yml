@@ -6,7 +6,8 @@ on:
     branches: [ develop ]
 
 permissions:
-  contents: write  # ← ADD THIS
+  contents: write
+  workflows: write
 
 jobs:
   build-and-deploy:
@@ -53,7 +54,6 @@ jobs:
             git merge -X ours origin/develop --no-edit
           }
           
-          # ← THIS IS THE FIX
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
