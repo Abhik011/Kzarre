@@ -1,6 +1,11 @@
-// app/user-management/layout.jsx
-import Layout from '@/Components/layout/Layout';
+// ✅ CORRECT - With types
+import { ReactNode } from 'react';
+import Layout from '@/components/layout/Layout';
 
-export default function UserManagementLayout({ children }) {
+export default function UserManagementLayout({ 
+  children 
+}: { 
+  children: ReactNode 
+}) {
   return <Layout>{children}</Layout>;
 }
