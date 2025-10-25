@@ -84,7 +84,7 @@ const StatCard = ({ title, value, change, icon: Icon, isPositive, bgColor }) => 
 
 export default function Dashboard() {
   return (
-    <div className="p-8 bg-gray-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>

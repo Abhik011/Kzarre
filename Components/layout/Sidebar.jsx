@@ -40,7 +40,7 @@ export default function Sidebar() {
       {/* Logo Section */}
       <div className="p-6 border-b border-gray-200">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center">
+          <div className="w-10 h-0 bg-green-900 rounded-full flex items-center justify-center">
             <span className="text-white font-bold text-sm">KZ</span>
           </div>
           {isOpen && <span className="font-semibold text-lg tracking-wide">KZARRÈ</span>}
