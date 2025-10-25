@@ -86,7 +86,7 @@ export default function Dashboard() {
   return (
     <div className="bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 lg:pt-8 pb-4 sm:pb-6">
+      <div className="sm:px-6 lg:px-8 sm:pt-6 lg:pt-8 sm:pb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
       </div>
 
