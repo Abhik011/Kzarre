@@ -57,7 +57,24 @@ const ECommerceSection = () => {
   };
 
   // Add Product Form States
-  const [productForm, setProductForm] = useState({
+  type ProductForm = {
+    name: string;
+    description: string;
+    gender: string[];
+    basePrice: string;
+    sellPrice: string;
+    discount: string;
+    discountType: 'percentage' | 'fixed' | string;
+    category: string;
+    vendor: string;
+    tags: string[];
+    primaryTag: string;
+    secondaryTag: string;
+    sku: string;
+    barcode: string;
+  };
+
+  const [productForm, setProductForm] = useState<ProductForm>({
     name: '',
     description: '',
     gender: [],
@@ -91,9 +108,9 @@ const ECommerceSection = () => {
   });
 
   const [showAddVariant, setShowAddVariant] = useState(false);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [uploadedImages, setUploadedImages] = useState<{ id: number; url: string | ArrayBuffer | null; name: string }[]>([]);
   const [selectedImage, setSelectedImage] = useState(0);
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
   // Orders data
@@ -130,18 +147,20 @@ const ECommerceSection = () => {
     handleMultipleFileUpload(files);
   };
 
-  const handleMultipleFileUpload = (files) => {
-    const newImages = [];
-    Array.from(files).forEach(file => {
-      if (file && file.type.startsWith('image/')) {
+  const handleMultipleFileUpload = (files: FileList | File[] | ArrayLike<File>) => {
+    const newImages: { id: number; url: string | ArrayBuffer | null; name: string; }[] = [];
+    const fileArray = Array.from(files as ArrayLike<File>);
+    const totalFiles = fileArray.length;
+    fileArray.forEach((file) => {
+      if (file && typeof file.type === 'string' && file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           newImages.push({
             id: Date.now() + Math.random(),
-            url: e.target.result,
+            url: (e.target as FileReader).result,
             name: file.name
           });
-          if (newImages.length === files.length) {
+          if (newImages.length === totalFiles) {
             setUploadedImages(prev => [...prev, ...newImages]);
           }
         };
@@ -150,14 +169,14 @@ const ECommerceSection = () => {
     });
   };
 
-  const handleFileSelect = (e) => {
+  const handleFileSelect = (e: { target: { files: any; }; }) => {
     const files = e.target.files;
     if (files) {
       handleMultipleFileUpload(files);
     }
   };
 
-  const removeImage = (id) => {
+  const removeImage = (id: any) => {
     setUploadedImages(prev => prev.filter(img => img.id !== id));
     if (selectedImage >= uploadedImages.length - 1) {
       setSelectedImage(0);
@@ -165,14 +184,14 @@ const ECommerceSection = () => {
   };
 
   // Product form handlers
-  const handleProductInputChange = (field, value) => {
+  const handleProductInputChange = (field: string, value: string | string[]) => {
     setProductForm(prev => ({
       ...prev,
       [field]: value
     }));
   };
 
-  const handleGenderChange = (gender) => {
+  const handleGenderChange = (gender: string) => {
     setProductForm(prev => ({
       ...prev,
       gender: prev.gender.includes(gender) 
@@ -185,8 +204,10 @@ const ECommerceSection = () => {
     if (newVariant.size) {
       const variant = {
         id: Date.now(),
-        ...newVariant,
-        price: productForm.sellPrice || 0,
+        size: newVariant.size,
+        color: newVariant.color,
+        material: newVariant.material,
+        price: Number(productForm.sellPrice) || 0,
         stock: parseInt(newVariant.stock) || 0
       };
       setVariants(prev => [...prev, variant]);
@@ -202,7 +223,7 @@ const ECommerceSection = () => {
     }
   };
 
-  const removeVariant = (id) => {
+  const removeVariant = (id: number) => {
     setVariants(prev => prev.filter(v => v.id !== id));
   };
 
@@ -220,11 +241,11 @@ const ECommerceSection = () => {
     const newProduct = {
       id: products.length + 1,
       name: productForm.name || 'New Product',
-      stock: variants.reduce((sum, v) => sum + (parseInt(v.stock) || 0), 0),
+      stock: variants.reduce((sum, v) => sum + (Number(v.stock) || 0), 0),
       threshold: 20,
       purchase: `$${productForm.basePrice}`,
       price: `$${productForm.sellPrice}`,
-      valuation: `$${variants.reduce((sum, v) => sum + (parseInt(v.stock) || 0), 0) * parseInt(productForm.sellPrice || 0)}`,
+      valuation: `$${variants.reduce((sum, v) => sum + (Number(v.stock) || 0), 0) * (Number(productForm.sellPrice) || 0)}`,
       supplier: productForm.vendor || 'Unknown',
       status: 'In Stock',
       sku: productForm.sku,
@@ -255,7 +276,7 @@ const ECommerceSection = () => {
     setCurrentView('inventory');
   };
 
-  const getStockStatus = (stock, threshold) => {
+  const getStockStatus = (stock: number, threshold: number) => {
     if (stock <= 5) return { text: 'Critical', color: 'text-red-600 bg-red-50' };
     if (stock <= threshold) return { text: 'Low Stock', color: 'text-yellow-600 bg-yellow-50' };
     return { text: 'In Stock', color: 'text-green-600 bg-green-50' };
@@ -405,7 +426,7 @@ const ECommerceSection = () => {
                 onChange={(e) => handleProductInputChange('description', e.target.value)}
                 className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
                 placeholder="Enter product description"
-                rows="4"
+                rows={4}
               />
             </div>
 
