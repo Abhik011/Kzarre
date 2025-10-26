@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.push('/dashboard');
-    }, 2200); // delay to show animation
+    }, 2100); // delay to show animation
     return () => clearTimeout(timer);
   }, [router]);
 
@@ -20,7 +20,7 @@ export default function Home() {
         src="https://lottie.host/e7734f21-27e6-4769-9e36-eb602fe2643b/AU382x6oe3.lottie"
         loop
         autoplay
-        speed={2} // slower: 0.5x speed, 2 = double speed
+        speed={3} // slower: 0.5x speed, 2 = double speed
         style={{ width: 500, height: 500 }}
       />
 
