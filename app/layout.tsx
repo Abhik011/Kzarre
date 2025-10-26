@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "KZARRÈ Admin",
   description: "Admin Dashboard Platform",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/logo.png",
   },
   keywords: ["Admin Dashboard", "KZARRÈ", "Management", "Next.js"],
   authors: [{ name: "Creonox Technologies", url: "https://www.creonox.in" }],
