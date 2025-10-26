@@ -693,7 +693,11 @@ const ECommerceSection = () => {
             <div className="space-y-4">
               <div className="relative rounded-lg overflow-hidden bg-gray-100">
                 <img 
-                  src={uploadedImages[selectedImage]?.url} 
+                   src={
+    typeof uploadedImages[selectedImage]?.url === "string"
+      ? uploadedImages[selectedImage]?.url
+      : ""
+  }
                   alt="Product"
                   className="w-full h-64 object-contain"
                 />
@@ -715,7 +719,7 @@ const ECommerceSection = () => {
                       selectedImage === index ? 'border-green-500' : 'border-gray-200'
                     }`}
                   >
-                    <img src={img.url} alt="" className="w-full h-full object-cover" />
+                    <img src={typeof img.url === 'string' ? img.url : ''} alt="" className="w-full h-full object-cover" />
                   </button>
                 ))}
                 {uploadedImages.length < 4 && (
