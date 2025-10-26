@@ -135,11 +135,11 @@ export default function Dashboard() {
             <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-4">Website Traffic</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={trafficData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb"/>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="value" stroke="#c7d2fe" fill="#e0e7ff" isAnimationActive={false} />
+                <Line type="monotone" dataKey="value" stroke="#6d5bf3c5" fill="#8979FF" isAnimationActive={false} />
               </LineChart>
             </ResponsiveContainer>
           </div>
