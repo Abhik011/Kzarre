@@ -104,7 +104,7 @@ const ECommerceSection = () => {
   ]);
 
   // File upload handlers
-  const handleDragEnter = (e) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(true);
